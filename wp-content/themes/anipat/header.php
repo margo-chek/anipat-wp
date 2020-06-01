@@ -46,7 +46,15 @@
 							</div>
 						</div>
 						<div class="col-lg-6 col-md-4 ">
-							<div class="social_media_links">
+							<?php 
+								wp_nav_menu( [
+									'theme_location'  => 'social-links-header-menu',
+									'container'       => 'div',
+									'container_class' => 'social_media_links',
+									'menu_class'      => 'false',								
+									] );
+							?>
+							<!-- <div class="social_media_links">
 								<a href="#">
 									<i class="fa fa-facebook"></i>
 								</a>
@@ -59,7 +67,7 @@
 								<a href="#">
 									<i class="fa fa-twitter"></i>
 								</a>
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</div>

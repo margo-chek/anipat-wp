@@ -64,30 +64,14 @@
 							<p class="address_text">239 E 5th St, New York 
 								NY 10003, USA
 							</p>
-							<div class="socail_links">
-								<ul>
-									<li>
-										<a href="#">
-											<i class="ti-facebook"></i>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<i class="fa fa-vk"></i>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<i class="fa fa-instagram"></i>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<i class="fa fa-twitter"></i>
-										</a>
-									</li>
-								</ul>
-							</div>
+							<?php 
+								wp_nav_menu( [
+									'theme_location'  => 'social-links-footer-menu',
+									'container'       => 'div',
+									'container_class' => 'socail_links',
+									'menu_class'      => 'false',								
+									] );
+							?>
 
 						</div>
 					</div>
