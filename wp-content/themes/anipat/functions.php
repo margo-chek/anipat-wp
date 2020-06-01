@@ -46,11 +46,18 @@ if ( ! function_exists( 'anipat_setup' ) ) :
 		 * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
 		 */
 		add_theme_support( 'post-thumbnails' );
+		add_image_size( 'post-thumb', 670, 402, true );
+		add_image_size( 'post-thumb-sidebar', 90, 90, true );
+		add_image_size( 'post-bg', 1920, 270, true );
 
 		// This theme uses wp_nav_menu() in one location.
 		register_nav_menus(
 			array(
-				'menu-1' => esc_html__( 'Primary', 'anipat' ),
+				'nav-aside-menu' => esc_html__( 'Nav Aside', 'anipat' ),
+				'about-us-footer-menu' => esc_html__( 'About Us', 'anipat' ),
+				'social-links-header-menu' => esc_html__( 'Social Header', 'anipat' ),
+				'social-links-footer-menu' => esc_html__( 'Social Footer', 'anipat' ),
+				'social-links-post-menu' => esc_html__( 'Social Post', 'anipat' ),
 			)
 		);
 
@@ -94,8 +101,8 @@ if ( ! function_exists( 'anipat_setup' ) ) :
 		add_theme_support(
 			'custom-logo',
 			array(
-				'height'      => 250,
-				'width'       => 250,
+				'height'      => 36,
+				'width'       => 146,
 				'flex-width'  => true,
 				'flex-height' => true,
 			)
@@ -136,6 +143,28 @@ function anipat_widgets_init() {
 			'after_title'   => '</h2>',
 		)
 	);
+	register_sidebar(
+		array(
+			'name'          => esc_html__( 'Sidebar Post', 'anipat' ),
+			'id'            => 'sidebar-post',
+			'description'   => esc_html__( 'Add widgets here.', 'anipat' ),
+			'before_widget' => '<div class="aside-widget %2$s" id="%1$s">',
+			'after_widget'  => '</div>',
+			'before_title'  => '<div class="section-title"><h2>',
+			'after_title'   => '</h2></div>',
+		)
+	);
+	register_sidebar(
+		array(
+			'name'          => esc_html__( 'Sidebar Category Footer', 'anipat' ),
+			'id'            => 'sidebar-category-footer',
+			'description'   => esc_html__( 'Add widgets here.', 'anipat' ),
+			'before_widget' => '<div class="footer-widget %2$s" id="%1$s">',
+			'after_widget'  => '</div>',
+			'before_title'  => '<div class="footer-title"><h3>',
+			'after_title'   => '</h3></div>',
+		)
+	);
 }
 add_action( 'widgets_init', 'anipat_widgets_init' );
 
@@ -143,16 +172,63 @@ add_action( 'widgets_init', 'anipat_widgets_init' );
  * Enqueue scripts and styles.
  */
 function anipat_scripts() {
-	wp_enqueue_style( 'anipat-style', get_stylesheet_uri(), array(), _S_VERSION );
+
+	wp_enqueue_style( 'open-sans', 'https://fonts.googleapis.com/css?family=Open+Sans:300i,400,400i,600,700|Poppins:200,200i,300,300i,400,500,500i,600,700,800,900&display=swap' );
+	wp_enqueue_style( 'bootstrap-style', get_template_directory_uri() . '/css/bootstrap.min.css' );
+	wp_enqueue_style( 'font-awesome', get_template_directory_uri() . '/css/font-awesome.min.css' );
+	wp_enqueue_style( 'themify-icons', get_template_directory_uri() . '/css/themify-icons.css' );
+	wp_enqueue_style( 'carousel', get_template_directory_uri() . '/css/owl.carousel.min.css' );
+	wp_enqueue_style( 'magnific-popup', get_template_directory_uri() . '/css/magnific-popup.css' );
+	wp_enqueue_style( 'nice-select', get_template_directory_uri() . '/css/nice-select.css' );
+	wp_enqueue_style( 'flaticon', get_template_directory_uri() . '/css/flaticon.css' );
+	wp_enqueue_style( 'gijgo', get_template_directory_uri() . '/css/gijgo.css' );
+	wp_enqueue_style( 'animate', get_template_directory_uri() . '/css/animate.css' );
+	wp_enqueue_style( 'slicknav', get_template_directory_uri() . '/css/slicknav.css' );
+	wp_enqueue_style( 'main-style', get_template_directory_uri() . '/css/style.css' );
+	wp_enqueue_style( 'anipat-style', get_stylesheet_uri(), array(), _S_VERSION ); // подключаем главный файл стилей style.css, который в корне
+
 	wp_style_add_data( 'anipat-style', 'rtl', 'replace' );
 
-	wp_enqueue_script( 'anipat-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
+	wp_deregister_script( 'jquery' );
+	wp_register_script( 'jquery', get_template_directory_uri() . '/js/vendor/jquery-1.12.4.min.js');
+	wp_enqueue_script( 'jquery' );
 
+	wp_enqueue_script( 'modernizr-script', get_template_directory_uri() . '/js/vendor/modernizr-3.5.0.min.js', 'jquery', null, true );
+	wp_enqueue_script( 'popper-script', get_template_directory_uri() . '/js/popper.min.js', 'jquery', null, true );
+	wp_enqueue_script( 'bootstrap-script', get_template_directory_uri() . '/js/bootstrap.min.js', 'jquery', null, true );
+	wp_enqueue_script( 'carousel-script', get_template_directory_uri() . '/js/owl.carousel.min.js', 'jquery', null, true );
+	wp_enqueue_script( 'counterup-script', get_template_directory_uri() . '/js/jquery.counterup.min.js', 'jquery', null, true );
+	wp_enqueue_script( 'imagesloaded-script', get_template_directory_uri() . '/js/imagesloaded.pkgd.min.js', 'jquery', null, true );
+	wp_enqueue_script( 'scrollIt-script', get_template_directory_uri() . '/js/scrollIt.js', 'jquery', null, true );
+	wp_enqueue_script( 'scrollUp-script', get_template_directory_uri() . '/js/jquery.scrollUp.min.js', 'jquery', null, true );
+	wp_enqueue_script( 'wow-script', get_template_directory_uri() . '/js/wow.min.js', 'jquery', null, true );
+	wp_enqueue_script( 'nice-select-script', get_template_directory_uri() . '/js/nice-select.min.js', 'jquery', null, true );
+	wp_enqueue_script( 'slicknav-script', get_template_directory_uri() . '/js/jquery.slicknav.min.js', 'jquery', null, true );
+	wp_enqueue_script( 'magnific-popup-script', get_template_directory_uri() . '/js/jquery.magnific-popup.min.js', 'jquery', null, true );
+	wp_enqueue_script( 'plugins-script', get_template_directory_uri() . '/js/plugins.js', 'jquery', null, true );
+	wp_enqueue_script( 'gijgo-script', get_template_directory_uri() . '/js/gijgo.js', 'jquery', null, true );
+
+	wp_enqueue_script( 'contact-script', get_template_directory_uri() . '/js/contact.js', 'jquery', null, true );
+	wp_enqueue_script( 'ajaxchimp-script', get_template_directory_uri() . '/js/jquery.ajaxchimp.min.js', 'jquery', null, true );
+	wp_enqueue_script( 'form-script', get_template_directory_uri() . '/js/jquery.form.js', 'jquery', null, true );
+	wp_enqueue_script( 'validate-script', get_template_directory_uri() . '/js/jquery.validate.min.js', 'jquery', null, true );
+
+	wp_enqueue_script( 'main', get_template_directory_uri() . '/js/main.js', 'jquery', null, true );
+	
+	wp_enqueue_script( 'anipat-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
+	
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
 }
 add_action( 'wp_enqueue_scripts', 'anipat_scripts' );
+
+add_filter('show_admin_bar', '__return_false');
+
+add_filter( 'get_the_archive_title', function( $title ) {
+});
+
+remove_filter('the_content', 'wptexturize');
 
 /**
  * Implement the Custom Header feature.
