@@ -51,12 +51,13 @@ if ( ! function_exists( 'anipat_setup' ) ) :
 		add_image_size( 'blog-post', 80, 80, true );
 		add_image_size( 'blog-thumb', 68, 68, true );
 		add_image_size( 'post-bg', 1920, 270, true );
+		add_image_size( 'logo', 146, 36, true );
 
 		// This theme uses wp_nav_menu() in one location.
 		register_nav_menus(
 			array(
 				'nav-header-menu' => esc_html__( 'Nav Header', 'anipat' ),
-				'top-header-menu' => esc_html__( 'Top Header', 'anipat' ),
+				'header-operated-menu' => esc_html__( 'Top Header', 'anipat' ),
 				'about-us-footer-menu' => esc_html__( 'About Us', 'anipat' ),
 				'social-links-header-menu' => esc_html__( 'Social Header', 'anipat' ),
 				'social-links-footer-menu' => esc_html__( 'Social Footer', 'anipat' ),
@@ -137,8 +138,8 @@ add_action( 'after_setup_theme', 'anipat_content_width', 0 );
 function anipat_widgets_init() {
 	register_sidebar(
 		array(
-			'name'          => esc_html__( 'Sidebar', 'anipat' ),
-			'id'            => 'sidebar-1',
+			'name'          => esc_html__( 'Sidebar Top', 'anipat' ),
+			'id'            => 'sidebar-top-header',
 			'description'   => esc_html__( 'Add widgets here.', 'anipat' ),
 			'before_widget' => '<section id="%1$s" class="widget %2$s">',
 			'after_widget'  => '</section>',
