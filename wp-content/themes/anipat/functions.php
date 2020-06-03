@@ -58,7 +58,10 @@ if ( ! function_exists( 'anipat_setup' ) ) :
 			array(
 				'nav-header-menu' => esc_html__( 'Nav Header', 'anipat' ),
 				'header-operated-menu' => esc_html__( 'Top Header', 'anipat' ),
-				'about-us-footer-menu' => esc_html__( 'About Us', 'anipat' ),
+				'contact-footer-menu' => esc_html__( 'Contact Us Footer', 'anipat' ),
+				'servces-footer-menu' => esc_html__( 'Our Servces Footer', 'anipat' ),
+				'lincs-footer-menu' => esc_html__( 'Quick Link', 'anipat' ),
+				'footer-menu' => esc_html__( 'Menu Footer', 'anipat' ),
 				'social-links-header-menu' => esc_html__( 'Social Header', 'anipat' ),
 				'social-links-footer-menu' => esc_html__( 'Social Footer', 'anipat' ),
 				'social-links-post-menu' => esc_html__( 'Social Post', 'anipat' ),
@@ -167,6 +170,28 @@ function anipat_widgets_init() {
 			'after_widget'  => '</div>',
 			'before_title'  => '<div class="footer-title"><h3>',
 			'after_title'   => '</h3></div>',
+		)
+	);
+	register_sidebar(
+		array(
+			'name'          => esc_html__( 'Sidebar Contact Footer', 'anipat' ),
+			'id'            => 'sidebar-contact-footer',
+			'description'   => esc_html__( 'Add widgets here.', 'anipat' ),
+			'before_widget' => '<div class="footer_widget %2$s" id="%1$s">',
+			'after_widget'  => '</div>',
+			'before_title'  => '<div class="footer_title"><h3>',
+			'after_title'   => '</h3></div>',
+		)
+	);
+	register_sidebar(
+		array(
+			'name'          => esc_html__( 'Sidebar Widget Footer', 'anipat' ),
+			'id'            => 'sidebar-widget-footer',
+			'description'   => esc_html__( 'Add widgets here.', 'anipat' ),
+			'before_widget' => '<div class="aside-widget %2$s" id="%1$s">',
+			'after_widget'  => '</div>',
+			'before_title'  => '',
+			'after_title'   => '',
 		)
 	);
 }
