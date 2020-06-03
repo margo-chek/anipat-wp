@@ -37,13 +37,12 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-6 col-md-8">
-							<?php 
-								wp_nav_menu( [
-									'theme_location'  => 'header-operated-menu',
-									'container'       => 'div',
-									'container_class' => 'short_contact_list',								
-									] );
-							?>
+							<div class="short_contact_list">
+								<ul>
+									<li><a href="#">+<?php the_field('short_contact_phone', 13); ?></a></li>
+									<li><a href="<?php echo home_url('/contact', 'https'); ?>"><?php the_field('short_contact_operated', 13); ?></a></li>
+								</ul>
+							</div>
 						</div>
 						<div class="col-lg-6 col-md-4 ">
 							<?php 
