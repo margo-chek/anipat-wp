@@ -40,7 +40,7 @@
 							<div class="short_contact_list">
 								<ul>
 									<li><a href="#">+<?php the_field('short_contact_phone', 13); ?></a></li>
-									<li><a href="<?php echo home_url('/contact', 'https'); ?>"><?php the_field('short_contact_operated', 13); ?></a></li>
+									<li><a href="<?php echo home_url('/contact/'); ?>"><?php the_field('short_contact_operated', 13); ?></a></li>
 								</ul>
 							</div>
 						</div>
