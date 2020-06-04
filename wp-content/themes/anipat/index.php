@@ -12,29 +12,8 @@
  * @package Anipat
  */
 
-get_header();
+get_header('index');
 ?>
-
-		<!-- slider_area_start -->
-		<div class="slider_area">
-		<div class="single_slider slider_bg_1 d-flex align-items-center">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-5 col-md-6">
-						<div class="slider_text">
-							<h3>We Care <br> <span>Your Pets</span></h3>
-							<p>Lorem ipsum dolor sit amet, consectetur <br> adipiscing elit, sed do eiusmod.</p>
-							<a href="contact.html" class="boxed-btn4">Contact Us</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="dog_thumb d-none d-lg-block">
-				<img src="<?php echo get_template_directory_uri(); ?>/img/banner/dog.png" alt="">
-			</div>
-		</div>
-	</div>
-	<!-- slider_area_end -->
 
 	<!-- service_area_start  -->
 	<div class="service_area">
@@ -292,12 +271,15 @@ get_header();
 				<div class="col-lg-8">
 					<div class="contact_text text-center">
 						<div class="section_title text-center">
+							<?php// if (have_posts()) the_post(); ?>
+								<h3><?php //the_title(); ?></h3>
+								<p><?php //the_content(); ?></p>
 							<h3>Why go with Anipat?</h3>
 							<p>Because we know that even the best technology is only as good as the people behind it. 24/7 tech support.</p>
 						</div>
 						<div class="contact_btn d-flex align-items-center justify-content-center">
-							<a href="contact.html" class="boxed-btn4">Contact Us</a>
-							<p>Or <a href="#">+880 4664 216</a></p>
+							<a href="<?php echo home_url('/contact/'); ?>" class="boxed-btn4">Contact Us</a>
+							<p>Or <a href="#">+<?php the_field('short_contact_phone', 13); ?></a></p>
 						</div>
 					</div>
 				</div>
@@ -306,4 +288,5 @@ get_header();
 	</div>
 
 <?php
+
 get_footer();

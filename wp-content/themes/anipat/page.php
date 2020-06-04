@@ -12,16 +12,17 @@
  * @package Anipat
  */
 
+if ( have_posts() ) the_post();
+	$id = get_the_ID();
+	if ( $id == 25) {
+		wp_redirect( home_url() );
+		exit;
+	}
+
+get_header('page');
+
 	while ( have_posts() ) :
 		the_post();
-
-		$id = get_the_ID();
-		if ( $id == 25) {
-			wp_redirect( home_url() );
-			exit;
-		}
-
-		get_header();
 
 		get_template_part( 'template-parts/content', 'page' );
 
