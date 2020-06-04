@@ -10,3 +10,12 @@
     </div>
     <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">Search</button>
 </form>
+
+<form role="search" method="get" id="searchformEm" class="searchform" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+    <div class="form-group">
+        <input type="email" class="form-control" onfocus="this.placeholder = ''" value="<?php echo get_search_query(); ?>"
+            onblur="this.placeholder = 'Enter email'" placeholder='Enter email' name="em" required>
+    </div>
+    <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
+        type="submit">Subscribe</button>
+</form>
