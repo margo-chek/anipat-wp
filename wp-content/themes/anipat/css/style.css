@@ -5641,7 +5641,7 @@ h6 {
 }
 
 /* line 755, ../../Arafath/CL/january 2020/240. Animal/HTML/scss/_blog.scss */
-.blog_right_sidebar .post_category_widget .cat-list li {
+.blog_right_sidebar .post_category_widget .cat-list li { 
   border-bottom: 1px solid #f0e9ff;
   transition: all 0.3s ease 0s;
   padding-bottom: 12px;

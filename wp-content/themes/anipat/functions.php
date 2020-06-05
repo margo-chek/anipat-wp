@@ -235,7 +235,7 @@ function anipat_scripts() {
 	wp_enqueue_script( 'slicknav-script', get_template_directory_uri() . '/js/jquery.slicknav.min.js', 'jquery', null, true );
 	wp_enqueue_script( 'magnific-popup-script', get_template_directory_uri() . '/js/jquery.magnific-popup.min.js', 'jquery', null, true );
 	wp_enqueue_script( 'plugins-script', get_template_directory_uri() . '/js/plugins.js', 'jquery', null, true );
-	wp_enqueue_script( 'gijgo-script', get_template_directory_uri() . '/js/gijgo.js', 'jquery', null, true );
+	wp_enqueue_script( 'gijgo-script', get_template_directory_uri() . '/js/gijgo.min.js', 'jquery', null, true );
 
 	wp_enqueue_script( 'contact-script', get_template_directory_uri() . '/js/contact.js', 'jquery', null, true );
 	wp_enqueue_script( 'ajaxchimp-script', get_template_directory_uri() . '/js/jquery.ajaxchimp.min.js', 'jquery', null, true );
@@ -286,3 +286,93 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+function add_span_cat_count($text) {
+	$str = str_replace('<a', '<a class="d-flex justify-content-between"', $text); // что , на что , где меняем - $text
+	// $str = str_replace(')', '</span></a>', $str);
+	return $str;
+}
+add_filter('wp_list_categories', 'add_span_cat_count');
+
+function show_recent_post( $atts ) {
+	$atts = shortcode_atts( [
+		'quantity'  => 4, // количество постов
+	], $atts );
+
+	if (!empty($atts['quantity']) && is_numeric($atts['quantity']) && $atts['quantity'] > 0 && $atts['quantity'] <= 5) {
+		$att_quantity = $atts['quantity'];
+	} else {
+		$att_quantity = 4; // если переданный параметр некорректен - взять параметр по умолчанию
+	}
+
+	global $post;
+	$temp_post = $post;
+
+	$posts = get_posts( array(
+		'numberposts' => $att_quantity,
+		'orderby'     => 'date', // 'comment_count',
+		// 'order'       => 'DESC', // DESC по умолчанию - от большего к меньшему
+	) );
+
+	$result = '';
+
+	foreach( $posts as $post ) {
+		setup_postdata($post); // функция, которая устанавливает все переменные permalink, title, category...
+
+		$result .= '<div class="media post_item">';
+		$result .= '<a alt="post" href="' . get_the_permalink($post) . '">' . get_the_post_thumbnail($post, 'blog-post') . '</a>'; // <img src="img/post/post_1.png" alt="post">
+		$result .= '<div class="media-body">';
+		$result .= '<a href="' . get_the_permalink($post) . '"><h3">' . get_the_title($post) . '</h3></a>'; // <a href="single-blog.html"><h3>From life was you fish...</h3></a>
+		$result .= '<p>' . get_the_date('F j, Y', $post) . '</p>'; // January 12, 2019
+		$result .= '</div></div>';
+	
+	}
+
+	wp_reset_postdata(); // сброс
+
+	$post = $temp_post;
+
+	return $result;
+}
+add_shortcode( 'recent_post', 'show_recent_post' ); // использование: [recent_post quantity=4]
+
+// function show_featured_read_posts( $atts ) {
+// 	$atts = shortcode_atts( [ // параметры по умолчанию - если не передали
+// 		'quantity'  => 2, // количество постов
+// 	], $atts );
+
+// 	if (!empty($atts['quantity']) && is_numeric($atts['quantity']) && $atts['quantity'] > 0 && $atts['quantity'] <= 5) {
+// 		$att_quantity = $atts['quantity'];
+// 	} else {
+// 		$att_quantity = 2; // если переданный параметр некорректен - взять параметр по умолчанию
+// 	}
+
+// 	global $post;
+// 	$temp_post = $post;
+
+// 	$posts = get_posts( array(
+// 		'numberposts' => $att_quantity,
+// 		'orderby'     => 'date', // 'comment_count',
+// 		// 'order'       => 'DESC', // DESC по умолчанию - от большего к меньшему
+// 	) );
+
+// 	$result = '';
+
+// 	foreach( $posts as $post ) {
+// 		setup_postdata($post);
+
+// 		$result .= '<div class="post post-thumb">';
+// 		$result .= '<a class="post-img" href="' . get_the_permalink($post) . '">' . get_the_post_thumbnail($post, 'post-thumb-index') . '</a>';
+// 		$result .= '<div class="post-body"><div class="post-meta">';
+// 		$result .= '<a class="post-category cat-item-' . get_the_category($post)[0]->cat_ID . '" href="' . get_category_link( get_the_category($post)[0]->cat_ID ) . '">' . get_the_category($post)[0]->cat_name . '</a>';
+// 		$result .= '<span class="post-date">' . get_the_date('F j, Y', $post) . '</span></div>';
+// 		$result .= '<h3 class="post-title"><a href="' . get_the_permalink($post) . '">' . get_the_title($post) . '</a></h3>';
+// 		$result .= '</div></div>';
+// 	}
+
+// 	wp_reset_postdata(); // сброс
+
+// 	$post = $temp_post;
+
+// 	return $result;
+// }
+// add_shortcode('featured-posts-index', 'show_featured_read_posts' ); // использование: [featured-posts-index quantity=2]
