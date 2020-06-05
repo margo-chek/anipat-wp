@@ -47,9 +47,10 @@ if ( ! function_exists( 'anipat_setup' ) ) :
 		 */
 		add_theme_support( 'post-thumbnails' );
 		add_image_size( 'post-thumb', 670, 402, true );
-		add_image_size( 'blog-card', 610, 305, true );
+		add_image_size( 'blog-card', 750, 375, true );
 		add_image_size( 'blog-post', 80, 80, true );
 		add_image_size( 'blog-thumb', 68, 68, true );
+		add_image_size( 'post-nav', 60, 60, true );
 		add_image_size( 'post-bg', 1920, 270, true );
 		add_image_size( 'logo', 146, 36, true );
 
@@ -166,10 +167,10 @@ function anipat_widgets_init() {
 			'name'          => esc_html__( 'Sidebar Post', 'anipat' ),
 			'id'            => 'sidebar-post',
 			'description'   => esc_html__( 'Add widgets here.', 'anipat' ),
-			'before_widget' => '<div class="footer_widget %2$s" id="%1$s">',
+			'before_widget' => '<div class="single_sidebar_widget %2$s" id="%1$s">',
 			'after_widget'  => '</div>',
-			'before_title'  => '<div class="footer_title"><h3>',
-			'after_title'   => '</h3></div>',
+			'before_title'  => '<div class="widget_title"><h4>',
+			'after_title'   => '</h4></div>',
 		)
 	);
 }
@@ -272,9 +273,7 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 }
 
 function add_span_cat_count($text) {
-	$str = str_replace('<a', '<a class="d-flex justify-content-between"', $text); // что , на что , где меняем - $text
-	// $str = str_replace('">', '"><p>(', $str);
-	// $str = str_replace('</a><p>', '<p>', $str);
+	$str = str_replace('<a', '<a class="d-flex justify-content-between"', $text);
 	$str = str_replace('</a>', '', $str);
 	$str = str_replace('(', '<p>(', $str);
 	$str = str_replace(')', ')</p></a>', $str);
@@ -283,7 +282,7 @@ function add_span_cat_count($text) {
 }
 add_filter('wp_list_categories', 'add_span_cat_count');
 
-function echo_trim_title($title) { // обрезаем строку-заголовок по количеству слов
+function echo_trim_title($title) {
 	if (substr($title, 0, 2) !== "<i") {
 		return wp_trim_words( $title, 5, ' ...' );
 	} else {
@@ -293,13 +292,13 @@ function echo_trim_title($title) { // обрезаем строку-заголо
 
 function show_recent_post( $atts ) {
 	$atts = shortcode_atts( [
-		'quantity'  => 4, // количество постов
+		'quantity'  => 4,
 	], $atts );
 
 	if (!empty($atts['quantity']) && is_numeric($atts['quantity']) && $atts['quantity'] > 0 && $atts['quantity'] <= 5) {
 		$att_quantity = $atts['quantity'];
 	} else {
-		$att_quantity = 4; // если переданный параметр некорректен - взять параметр по умолчанию
+		$att_quantity = 4;
 	}
 
 	global $post;
@@ -307,26 +306,26 @@ function show_recent_post( $atts ) {
 
 	$posts = get_posts( array(
 		'numberposts' => $att_quantity,
-		'orderby'     => 'date', // 'comment_count',
+		'orderby'     => 'date',
 		// 'order'       => 'DESC', // DESC по умолчанию - от большего к меньшему
 	) );
 
 	$result = '';
 
 	foreach( $posts as $post ) {
-		setup_postdata($post); // функция, которая устанавливает все переменные permalink, title, category...
+		setup_postdata($post);
 
 		$title = echo_trim_title(get_the_title($post));
 
 		$result .= '<div class="media post_item">';
-		$result .= '<a alt="post" href="' . get_the_permalink($post) . '">' . get_the_post_thumbnail($post, 'blog-post') . '</a>'; // <img src="img/post/post_1.png" alt="post">
+		$result .= '<a alt="post" href="' . get_the_permalink($post) . '">' . get_the_post_thumbnail($post, 'blog-post') . '</a>';
 		$result .= '<div class="media-body">';
-		$result .= '<a href="' . get_the_permalink($post) . '"><h3">' . $title . '</h3></a>'; // <a href="single-blog.html"><h3>From life was you fish...</h3></a>
+		$result .= '<a href="' . get_the_permalink($post) . '"><h3">' . $title . '</h3></a>';
 		$result .= '<p>' . get_the_date('F j, Y', $post) . '</p>'; // January 12, 2019
 		$result .= '</div></div>';
 	}
 
-	wp_reset_postdata(); // сброс
+	wp_reset_postdata();
 
 	$post = $temp_post;
 

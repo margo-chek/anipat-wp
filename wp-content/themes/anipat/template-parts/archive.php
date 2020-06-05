@@ -14,6 +14,7 @@ get_header('page');
 	<!--================Blog Area =================-->
 	<section class="blog_area section-padding">
 		<div class="container">
+			<h2>АРХИВ ТУТ</h2>
 			<div class="row">
 				<div class="col-lg-8 mb-5 mb-lg-0">
 					<div class="blog_left_sidebar">
