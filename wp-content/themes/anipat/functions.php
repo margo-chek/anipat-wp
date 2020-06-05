@@ -141,30 +141,19 @@ add_action( 'after_setup_theme', 'anipat_content_width', 0 );
 function anipat_widgets_init() {
 	register_sidebar(
 		array(
-			'name'          => esc_html__( 'Sidebar Top', 'anipat' ),
-			'id'            => 'sidebar-top-header',
-			'description'   => esc_html__( 'Add widgets here.', 'anipat' ),
-			'before_widget' => '<section id="%1$s" class="widget %2$s">',
-			'after_widget'  => '</section>',
-			'before_title'  => '<h2 class="widget-title">',
-			'after_title'   => '</h2>',
-		)
-	);
-	register_sidebar(
-		array(
 			'name'          => esc_html__( 'Sidebar Blog', 'anipat' ),
 			'id'            => 'sidebar-blog',
 			'description'   => esc_html__( 'Add widgets here.', 'anipat' ),
-			'before_widget' => '<div class="aside-widget %2$s" id="%1$s">',
+			'before_widget' => '<div class="single_sidebar_widget %2$s" id="%1$s">',
 			'after_widget'  => '</div>',
-			'before_title'  => '<div class="section-title"><h2>',
-			'after_title'   => '</h2></div>',
+			'before_title'  => '<div class="widget_title"><h4>',
+			'after_title'   => '</h4></div>',
 		)
 	);
 	register_sidebar(
 		array(
-			'name'          => esc_html__( 'Sidebar Category Footer', 'anipat' ),
-			'id'            => 'sidebar-category-footer',
+			'name'          => esc_html__( 'Sidebar Category', 'anipat' ),
+			'id'            => 'sidebar-category',
 			'description'   => esc_html__( 'Add widgets here.', 'anipat' ),
 			'before_widget' => '<div class="footer-widget %2$s" id="%1$s">',
 			'after_widget'  => '</div>',
@@ -174,8 +163,8 @@ function anipat_widgets_init() {
 	);
 	register_sidebar(
 		array(
-			'name'          => esc_html__( 'Sidebar Contact Footer', 'anipat' ),
-			'id'            => 'sidebar-contact-footer',
+			'name'          => esc_html__( 'Sidebar Post', 'anipat' ),
+			'id'            => 'sidebar-post',
 			'description'   => esc_html__( 'Add widgets here.', 'anipat' ),
 			'before_widget' => '<div class="footer_widget %2$s" id="%1$s">',
 			'after_widget'  => '</div>',
@@ -183,19 +172,15 @@ function anipat_widgets_init() {
 			'after_title'   => '</h3></div>',
 		)
 	);
-	register_sidebar(
-		array(
-			'name'          => esc_html__( 'Sidebar Widget Footer', 'anipat' ),
-			'id'            => 'sidebar-widget-footer',
-			'description'   => esc_html__( 'Add widgets here.', 'anipat' ),
-			'before_widget' => '<div class="aside-widget %2$s" id="%1$s">',
-			'after_widget'  => '</div>',
-			'before_title'  => '',
-			'after_title'   => '',
-		)
-	);
 }
 add_action( 'widgets_init', 'anipat_widgets_init' );
+
+// Contact Form 7 remove auto added p tags
+add_filter('wpcf7_autop_or_not', '__return_false'); 
+add_filter('wpcf7_form_elements', function($content) {
+    $content = preg_replace('/<(span).*?class="\s*(?:.*\s)?wpcf7-form-control-wrap(?:\s[^"]+)?\s*"[^\>]*>(.*)<\/\1>/i', '\2', $content);
+    return $content;
+});
 
 /**
  * Enqueue scripts and styles.
@@ -288,10 +273,23 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 
 function add_span_cat_count($text) {
 	$str = str_replace('<a', '<a class="d-flex justify-content-between"', $text); // что , на что , где меняем - $text
-	// $str = str_replace(')', '</span></a>', $str);
+	// $str = str_replace('">', '"><p>(', $str);
+	// $str = str_replace('</a><p>', '<p>', $str);
+	$str = str_replace('</a>', '', $str);
+	$str = str_replace('(', '<p>(', $str);
+	$str = str_replace(')', ')</p></a>', $str);
+
 	return $str;
 }
 add_filter('wp_list_categories', 'add_span_cat_count');
+
+function echo_trim_title($title) { // обрезаем строку-заголовок по количеству слов
+	if (substr($title, 0, 2) !== "<i") {
+		return wp_trim_words( $title, 5, ' ...' );
+	} else {
+		return $title;
+	}
+}
 
 function show_recent_post( $atts ) {
 	$atts = shortcode_atts( [
@@ -318,13 +316,14 @@ function show_recent_post( $atts ) {
 	foreach( $posts as $post ) {
 		setup_postdata($post); // функция, которая устанавливает все переменные permalink, title, category...
 
+		$title = echo_trim_title(get_the_title($post));
+
 		$result .= '<div class="media post_item">';
 		$result .= '<a alt="post" href="' . get_the_permalink($post) . '">' . get_the_post_thumbnail($post, 'blog-post') . '</a>'; // <img src="img/post/post_1.png" alt="post">
 		$result .= '<div class="media-body">';
-		$result .= '<a href="' . get_the_permalink($post) . '"><h3">' . get_the_title($post) . '</h3></a>'; // <a href="single-blog.html"><h3>From life was you fish...</h3></a>
+		$result .= '<a href="' . get_the_permalink($post) . '"><h3">' . $title . '</h3></a>'; // <a href="single-blog.html"><h3>From life was you fish...</h3></a>
 		$result .= '<p>' . get_the_date('F j, Y', $post) . '</p>'; // January 12, 2019
 		$result .= '</div></div>';
-	
 	}
 
 	wp_reset_postdata(); // сброс
@@ -335,44 +334,3 @@ function show_recent_post( $atts ) {
 }
 add_shortcode( 'recent_post', 'show_recent_post' ); // использование: [recent_post quantity=4]
 
-// function show_featured_read_posts( $atts ) {
-// 	$atts = shortcode_atts( [ // параметры по умолчанию - если не передали
-// 		'quantity'  => 2, // количество постов
-// 	], $atts );
-
-// 	if (!empty($atts['quantity']) && is_numeric($atts['quantity']) && $atts['quantity'] > 0 && $atts['quantity'] <= 5) {
-// 		$att_quantity = $atts['quantity'];
-// 	} else {
-// 		$att_quantity = 2; // если переданный параметр некорректен - взять параметр по умолчанию
-// 	}
-
-// 	global $post;
-// 	$temp_post = $post;
-
-// 	$posts = get_posts( array(
-// 		'numberposts' => $att_quantity,
-// 		'orderby'     => 'date', // 'comment_count',
-// 		// 'order'       => 'DESC', // DESC по умолчанию - от большего к меньшему
-// 	) );
-
-// 	$result = '';
-
-// 	foreach( $posts as $post ) {
-// 		setup_postdata($post);
-
-// 		$result .= '<div class="post post-thumb">';
-// 		$result .= '<a class="post-img" href="' . get_the_permalink($post) . '">' . get_the_post_thumbnail($post, 'post-thumb-index') . '</a>';
-// 		$result .= '<div class="post-body"><div class="post-meta">';
-// 		$result .= '<a class="post-category cat-item-' . get_the_category($post)[0]->cat_ID . '" href="' . get_category_link( get_the_category($post)[0]->cat_ID ) . '">' . get_the_category($post)[0]->cat_name . '</a>';
-// 		$result .= '<span class="post-date">' . get_the_date('F j, Y', $post) . '</span></div>';
-// 		$result .= '<h3 class="post-title"><a href="' . get_the_permalink($post) . '">' . get_the_title($post) . '</a></h3>';
-// 		$result .= '</div></div>';
-// 	}
-
-// 	wp_reset_postdata(); // сброс
-
-// 	$post = $temp_post;
-
-// 	return $result;
-// }
-// add_shortcode('featured-posts-index', 'show_featured_read_posts' ); // использование: [featured-posts-index quantity=2]

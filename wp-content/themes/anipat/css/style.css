@@ -5641,31 +5641,36 @@ h6 {
 }
 
 /* line 755, ../../Arafath/CL/january 2020/240. Animal/HTML/scss/_blog.scss */
-.blog_right_sidebar .post_category_widget .cat-list li { 
+.blog_right_sidebar .post_category_widget .cat-list li,
+.widget_categories ul .cat-item { 
   border-bottom: 1px solid #f0e9ff;
   transition: all 0.3s ease 0s;
   padding-bottom: 12px;
 }
 
 /* line 760, ../../Arafath/CL/january 2020/240. Animal/HTML/scss/_blog.scss */
-.blog_right_sidebar .post_category_widget .cat-list li:last-child {
+.blog_right_sidebar .post_category_widget .cat-list li:last-child, 
+.widget_categories ul .cat-item:last-child {
   border-bottom: 0;
 }
 
 /* line 764, ../../Arafath/CL/january 2020/240. Animal/HTML/scss/_blog.scss */
-.blog_right_sidebar .post_category_widget .cat-list li a {
+.blog_right_sidebar .post_category_widget .cat-list li a, 
+.widget_categories ul .cat-item a {
   font-size: 14px;
   line-height: 20px;
   color: #888888;
 }
 
 /* line 769, ../../Arafath/CL/january 2020/240. Animal/HTML/scss/_blog.scss */
-.blog_right_sidebar .post_category_widget .cat-list li a p {
+.blog_right_sidebar .post_category_widget .cat-list li a p,
+.widget_categories ul .cat-item a p {
   margin-bottom: 0px;
 }
 
 /* line 774, ../../Arafath/CL/january 2020/240. Animal/HTML/scss/_blog.scss */
-.blog_right_sidebar .post_category_widget .cat-list li + li {
+.blog_right_sidebar .post_category_widget .cat-list li + li,
+.widget_categories ul .cat-item + li {
   padding-top: 15px;
 }
 
@@ -6562,3 +6567,20 @@ h6 {
 }
 
 /*# sourceMappingURL=style.css.map */
+
+.media {
+  margin-top: 20px;
+}
+
+.media-body {
+  padding-left: 20px;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.gallery-item {
+  margin-right: 10px;
+}

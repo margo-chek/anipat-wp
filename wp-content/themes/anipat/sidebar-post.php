@@ -7,8 +7,11 @@
  * @package Anipat
  */
 
-if ( ! is_active_sidebar( 'sidebar-blog' ) ) {
+if ( ! is_active_sidebar( 'sidebar-post' ) ) {
 	return;
 }
+?>
 
-dynamic_sidebar( 'sidebar-blog' );
+<aside id="secondary" class="widget-area">
+	<?php dynamic_sidebar( 'sidebar-post' ); ?>
+</aside><!-- #secondary -->

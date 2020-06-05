@@ -7,11 +7,11 @@
  * @package Anipat
  */
 
-if ( ! is_active_sidebar( 'sidebar-contact-footer' ) ) {
+if ( ! is_active_sidebar( 'sidebar-category' ) ) {
 	return;
 }
 ?>
 
 <aside id="secondary" class="widget-area">
-	<?php dynamic_sidebar( 'sidebar-contact-footer' ); ?>
+	<?php dynamic_sidebar( 'sidebar-category' ); ?>
 </aside><!-- #secondary -->
