@@ -93,9 +93,9 @@
 				<div class="row">
 					<div class="col-lg-5 col-md-6">
 						<div class="slider_text">
-							<h3>We Care <br> <span>Your Pets</span></h3>
-							<p>Lorem ipsum dolor sit amet, consectetur <br> adipiscing elit, sed do eiusmod.</p>
-							<a href="contact.html" class="boxed-btn4">Contact Us</a>
+							<h3><?php the_field('slider_area_start_title', 25); ?> <br> <span><?php the_field('slider_area_start_subtitle', 25); ?></span></h3>
+							<p><?php the_field('slider_area_start_content', 25); ?></p>
+							<a href="<?php echo home_url('/contact/'); ?>" class="boxed-btn4"><?php the_field('footer_contact_title', 13); ?></a>
 						</div>
 					</div>
 				</div>

@@ -265,28 +265,6 @@ get_header('index');
 	</div>
 	<!-- team_area_start  -->
 
-	<div class="contact_anipat anipat_bg_1">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-lg-8">
-					<div class="contact_text text-center">
-						<div class="section_title text-center">
-							<?php// if (have_posts()) the_post(); ?>
-								<h3><?php //the_title(); ?></h3>
-								<p><?php //the_content(); ?></p>
-							<h3>Why go with Anipat?</h3>
-							<p>Because we know that even the best technology is only as good as the people behind it. 24/7 tech support.</p>
-						</div>
-						<div class="contact_btn d-flex align-items-center justify-content-center">
-							<a href="<?php echo home_url('/contact/'); ?>" class="boxed-btn4">Contact Us</a>
-							<p>Or <a href="#">+<?php the_field('short_contact_phone', 13); ?></a></p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
 <?php
 
-get_footer();
+get_footer('page');
