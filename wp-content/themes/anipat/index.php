@@ -14,7 +14,37 @@
 
 get_header('index');
 ?>
+	<?php
+					global $post;
+					$myposts = get_posts( array(
+						'post_type'   => 'lesson',
+						'numberposts' => 4,
+					) );
 
+					if (!empty($myposts)) {
+						
+						foreach( $myposts as $post ){
+							setup_postdata( $post ); 
+							?>
+							<!-- post -->
+								<div class="col-md-6">
+									<div class="post">
+										<a class="post-img" href="<?php the_permalink() ?>">
+											<?php the_post_thumbnail( 'post-thumb-top-index' ) ?>
+										</a>
+										<div class="post-body">
+											<h3 class="post-title"><a href="<?php the_permalink() ?>"><?php the_title() ?></a></h3>
+										</div>
+									</div>
+								</div>
+							<!-- /post -->															
+						<?php 
+						} 				
+					} else {
+						echo "Уроков нет";
+					}
+					wp_reset_postdata(); // сбрасываем переменную $post
+				?>
 	<!-- service_area_start  -->
 	<div class="service_area">
 		<div class="container">

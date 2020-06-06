@@ -51,6 +51,11 @@ if ( ! function_exists( 'anipat_setup' ) ) :
 		add_image_size( 'blog-post', 80, 80, true );
 		add_image_size( 'blog-thumb', 68, 68, true );
 		add_image_size( 'post-nav', 60, 60, true );
+		add_image_size( 'serv-card', 98, 80, true );
+		add_image_size( 'care-thumb', 445, 580, true );
+		add_image_size( 'help-thumb', 80, 82, true );
+		add_image_size( 'photo-thumb', 130, 148, true );
+		add_image_size( 'photo-team-thumb', 350, 308, true );
 		add_image_size( 'post-bg', 1920, 270, true );
 		add_image_size( 'logo', 146, 36, true );
 
@@ -333,3 +338,234 @@ function show_recent_post( $atts ) {
 }
 add_shortcode( 'recent_post', 'show_recent_post' ); // использование: [recent_post quantity=4]
 
+add_action('init', 'services_init');
+function services_init() {
+	register_post_type('service', array(
+		'labels'             => array(
+			'name'               => 'Сервисы',
+			'singular_name'      => 'Service',
+			'add_new'            => 'Добавить новый',
+			'add_new_item'       => 'Добавить новый сервис',
+			'edit_item'          => 'Редактировать сервис',
+			'new_item'           => 'Новый сервис',
+			'view_item'          => 'Посмотреть сервис',
+			'search_items'       => 'Найти сервис',
+			'not_found'          => 'Сервисов не найден',
+			'not_found_in_trash' => 'В корзине сервисов не найден',
+			'parent_item_colon'  => '',
+			'menu_name'          => 'Сервисы'
+			),
+		'public'             => true,
+		'publicly_queryable' => true,
+		'show_ui'            => true,
+		'show_in_menu'       => true,
+		'menu_icon'			 => 'dashicons-cart',
+		'query_var'          => true,
+		'rewrite'            => true,
+		'capability_type'    => 'post',
+		'has_archive'        => true,
+		'hierarchical'       => false,
+		'menu_position'      => 22,
+		'supports'           => array('title','editor','author','thumbnail','excerpt','comments')
+	) );
+}
+
+add_action('init', 'reviews_init');
+function reviews_init() {
+	register_post_type('review', array(
+		'labels'             => array(
+			'name'               => 'Отзывы',
+			'singular_name'      => 'Reviews',
+			'add_new'            => 'Добавить новый',
+			'add_new_item'       => 'Добавить новый отзыв',
+			'edit_item'          => 'Редактировать отзыв',
+			'new_item'           => 'Новый отзыв',
+			'view_item'          => 'Посмотреть отзыв',
+			'search_items'       => 'Найти отзыв',
+			'not_found'          => 'Отзывов не найдено',
+			'not_found_in_trash' => 'В корзине отзывов не найдено',
+			'parent_item_colon'  => '',
+			'menu_name'          => 'Отзывы'
+			),
+		'public'             => true,
+		'publicly_queryable' => true,
+		'show_ui'            => true,
+		'show_in_menu'       => true,
+		'menu_icon'			 => 'dashicons-testimonial',
+		'query_var'          => true,
+		'rewrite'            => true,
+		'capability_type'    => 'post',
+		'has_archive'        => true,
+		'hierarchical'       => false,
+		'menu_position'      => 23,
+		'supports'           => array('title','editor','author','thumbnail','excerpt','comments')
+	) );
+}
+
+add_action('init', 'teams_init');
+function teams_init() {
+	register_post_type('team', array(
+		'labels'             => array(
+			'name'               => 'Команды',
+			'singular_name'      => 'Teams',
+			'add_new'            => 'Добавить новую',
+			'add_new_item'       => 'Добавить новую команду',
+			'edit_item'          => 'Редактировать команду',
+			'new_item'           => 'Новая команда',
+			'view_item'          => 'Посмотреть команду',
+			'search_items'       => 'Найти команду',
+			'not_found'          => 'Команд не найдено',
+			'not_found_in_trash' => 'В корзине команд не найдено',
+			'parent_item_colon'  => '',
+			'menu_name'          => 'Команды'
+			),
+		'public'             => true,
+		'publicly_queryable' => true,
+		'show_ui'            => true,
+		'show_in_menu'       => true,
+		'menu_icon'			 => 'dashicons-buddicons-buddypress-logo',
+		'query_var'          => true,
+		'rewrite'            => true,
+		'capability_type'    => 'post',
+		'has_archive'        => true,
+		'hierarchical'       => false,
+		'menu_position'      => 24,
+		'supports'           => array('title','editor','author','thumbnail','excerpt','comments')
+	) );
+}
+
+
+// хук, через который подключается функция
+// регистрирующая новые таксономии (create_video_taxonomies)
+// add_action( 'init', 'create_video_taxonomies' );
+
+// функция, создающая 2 новые таксономии "genres" и "authors" для постов типа "video"
+// function create_video_taxonomies() {
+
+	// Добавляем древовидную таксономию 'genre' (как категории)
+	// register_taxonomy('genre', array('video'), array(
+	// 	'hierarchical'  => true,
+	// 	'labels'        => array(
+	// 		'name'              => _x( 'Жанры', 'taxonomy general name' ),
+	// 		'singular_name'     => _x( 'Genre', 'taxonomy singular name' ),
+	// 		'search_items'      =>  __( 'Search Genres' ),
+	// 		'all_items'         => __( 'All Genres' ),
+	// 		'parent_item'       => __( 'Parent Genre' ),
+	// 		'parent_item_colon' => __( 'Parent Genre:' ),
+	// 		'edit_item'         => __( 'Edit Genre' ),
+	// 		'update_item'       => __( 'Update Genre' ),
+	// 		'add_new_item'      => __( 'Добавить новый жанр' ),
+	// 		'new_item_name'     => __( 'New Genre Name' ),
+	// 		'menu_name'         => __( 'Жанры' ),
+	// 	),
+	// 	'show_ui'       => true,
+	// 	'query_var'     => true,
+	// 	'rewrite'       => array( 'slug' => 'the_genre' ), // есть свой собственный слаг в URL
+	// ));
+
+	// Добавляем НЕ древовидную таксономию 'estimation' (как метки)
+// 	register_taxonomy('estimation', 'review', array(
+// 		'hierarchical'  => false,
+// 		'labels'        => array(
+// 			'name'                        => _x( 'Авторы', 'taxonomy general name' ),
+// 			'singular_name'               => _x( 'Estimation', 'taxonomy singular name' ),
+// 			'search_items'                =>  __( 'Search Authors' ),
+// 			'popular_items'               => __( 'Popular Authors' ),
+// 			'all_items'                   => __( 'All Authors' ),
+// 			'parent_item'                 => null,
+// 			'parent_item_colon'           => null,
+// 			'edit_item'                   => __( 'Edit Author' ),
+// 			'update_item'                 => __( 'Update Author' ),
+// 			'add_new_item'                => __( 'Add New Author' ),
+// 			'new_item_name'               => __( 'New Author Name' ),
+// 			'separate_items_with_commas'  => __( 'Separate authors with commas' ),
+// 			'add_or_remove_items'         => __( 'Add or remove authors' ),
+// 			'choose_from_most_used'       => __( 'Choose from the most used authors' ),
+// 			'menu_name'                   => __( 'Авторы' ),
+// 		),
+// 		'show_ui'       => true,
+// 		'query_var'     => true,
+// 		'rewrite'       => array( 'slug' => 'the_author' ), // свой слаг в URL
+// 	));
+// }
+
+
+add_action( 'init', 'create_review_taxonomies' );
+function create_review_taxonomies() {
+
+	// Добавляем НЕ древовидные таксономии
+	register_taxonomy('estimation', 'review', array(
+		'hierarchical'  => false,
+		'labels'        => array(
+			'name'                        => _x( 'Оценка', 'taxonomy general name' ),
+			'singular_name'               => _x( 'Estimation', 'taxonomy singular name' ),
+			'search_items'                =>  __( 'Search Estimations' ),
+			'popular_items'               => __( 'Popular Estimations' ),
+			'all_items'                   => __( 'All Estimations' ),
+			'parent_item'                 => null,
+			'parent_item_colon'           => null,
+			'edit_item'                   => __( 'Edit Estimation' ),
+			'update_item'                 => __( 'Update Estimation' ),
+			'add_new_item'                => __( 'Add New Estimation' ),
+			'new_item_name'               => __( 'New Estimation Name' ),
+			'separate_items_with_commas'  => __( 'Separate estimations with commas' ),
+			'add_or_remove_items'         => __( 'Add or remove estimations' ),
+			'choose_from_most_used'       => __( 'Choose from the most used estimations' ),
+			'menu_name'                   => __( 'Оценки' ),
+		),
+		'show_ui'       => true,
+		'query_var'     => true,
+		'rewrite'       => array( 'slug' => 'the_estimation' ), // свой слаг в URL
+	));
+	register_taxonomy('author_post', 'review', array(
+		'hierarchical'  => false,
+		'labels'        => array(
+			'name'                        => _x( 'Должность автора', 'taxonomy general name' ),
+			'singular_name'               => _x( 'Author Post', 'taxonomy singular name' ),
+			'search_items'                =>  __( 'Search Author Posts' ),
+			'popular_items'               => __( 'Popular Author Posts' ),
+			'all_items'                   => __( 'All Author Posts' ),
+			'parent_item'                 => null,
+			'parent_item_colon'           => null,
+			'edit_item'                   => __( 'Edit Author Posts' ),
+			'update_item'                 => __( 'Update Author Post' ),
+			'add_new_item'                => __( 'Add New Author Post' ),
+			'new_item_name'               => __( 'New Author Post Name' ),
+			'separate_items_with_commas'  => __( 'Separate author posts with commas' ),
+			'add_or_remove_items'         => __( 'Add or remove author posts' ),
+			'choose_from_most_used'       => __( 'Choose from the most used author posts' ),
+			'menu_name'                   => __( 'Должность автора' ),
+		),
+		'show_ui'       => true,
+		'query_var'     => true,
+		'rewrite'       => array( 'slug' => 'the_author_post' ), // свой слаг в URL
+	));
+}
+
+add_action( 'init', 'create_team_taxonomies' );
+function create_team_taxonomies() {
+
+	register_taxonomy('team_post', 'team', array(
+		'hierarchical'  => false,
+		'labels'        => array(
+			'name'                        => _x( 'Должность в команде', 'taxonomy general name' ),
+			'singular_name'               => _x( 'Team Post', 'taxonomy singular name' ),
+			'search_items'                =>  __( 'Search Team Posts' ),
+			'popular_items'               => __( 'Popular Team Posts' ),
+			'all_items'                   => __( 'All Team Posts' ),
+			'parent_item'                 => null,
+			'parent_item_colon'           => null,
+			'edit_item'                   => __( 'Edit Team Posts' ),
+			'update_item'                 => __( 'Update Team Post' ),
+			'add_new_item'                => __( 'Add New Team Post' ),
+			'new_item_name'               => __( 'New Team Post Name' ),
+			'separate_items_with_commas'  => __( 'Separate team posts with commas' ),
+			'add_or_remove_items'         => __( 'Add or remove team posts' ),
+			'choose_from_most_used'       => __( 'Choose from the most used team posts' ),
+			'menu_name'                   => __( 'Должность в команде' ),
+		),
+		'show_ui'       => true,
+		'query_var'     => true,
+		'rewrite'       => array( 'slug' => 'the_team_post' ), // свой слаг в URL
+	));
+}
