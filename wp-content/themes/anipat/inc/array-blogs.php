@@ -11,7 +11,7 @@
 
 	$myposts = get_posts( array(
 		'numberposts' => 4,
-		'offset'      => 0, // с учетом пагинации смещение/отступ от первого поста
+		'offset'      => 0,
 		'order'       => 'DESC',
 	) );
 
@@ -35,7 +35,7 @@
 					</a>
 					<p><?php the_excerpt(); ?></p>
 					<ul class="blog-info-link">
-						<li><a href="<?php echo get_category_link( get_the_category()[0]->cat_ID ); ?>"><i class="fa fa-folder-open"></i> <?php echo get_the_category()[0]->cat_name; ?></a></li>
+						<li><a href="<?php echo get_category_link(get_the_category()[0]->term_id); ?>"><i class="fa fa-folder-open"></i> <?php echo get_the_category()[0]->cat_name; ?></a></li>
 					</ul>
 				</div>
 			</article>	

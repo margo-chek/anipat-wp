@@ -17,7 +17,6 @@ if ( have_posts() ) the_post();
 $id = get_the_ID();
 
 if ( $id == 25) {
-	the_content();
 	wp_redirect( home_url() );
 	// exit;
 }
@@ -32,6 +31,10 @@ if ( $id == 6) {
 
 if ( $id == 10) {
 	get_template_part( 'inc/section', 'service' );
+}
+
+if ( $id == 262) {
+	the_content();
 }
 
 	while ( have_posts() ) :
