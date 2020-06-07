@@ -15,7 +15,7 @@
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Home | Anipat</title>
+	<!-- <title>Home | Anipat</title> -->
 	<link rel="profile" href="https://gmpg.org/xfn/11">
 	<link rel="shortcut icon" type="image/x-icon" href="<?php echo get_template_directory_uri(); ?>/img/favicon.png">
 

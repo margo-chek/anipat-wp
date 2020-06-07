@@ -17,8 +17,9 @@ if ( have_posts() ) the_post();
 $id = get_the_ID();
 
 if ( $id == 25) {
+	the_content();
 	wp_redirect( home_url() );
-	exit;
+	// exit;
 }
 
 get_header('page');
