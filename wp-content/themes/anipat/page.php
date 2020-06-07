@@ -13,13 +13,25 @@
  */
 
 if ( have_posts() ) the_post();
-	$id = get_the_ID();
-	if ( $id == 25) {
-		wp_redirect( home_url() );
-		exit;
-	}
+
+$id = get_the_ID();
+
+if ( $id == 25) {
+	wp_redirect( home_url() );
+	exit;
+}
 
 get_header('page');
+
+if ( $id == 6) {
+	get_template_part( 'inc/section', 'team' );
+	get_template_part( 'inc/section', 'care' );
+	get_template_part( 'inc/section', 'help' );
+}
+
+if ( $id == 10) {
+	get_template_part( 'inc/section', 'service' );
+}
 
 	while ( have_posts() ) :
 		the_post();
@@ -32,5 +44,9 @@ get_header('page');
 		endif;
 
 	endwhile; // End of the loop.
+
+get_template_part( 'inc/section', 'review' );
+
+get_template_part( 'inc/section', 'why' );
 
 get_footer();

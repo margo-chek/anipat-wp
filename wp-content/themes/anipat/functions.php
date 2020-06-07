@@ -47,9 +47,10 @@ if ( ! function_exists( 'anipat_setup' ) ) :
 		 */
 		add_theme_support( 'post-thumbnails' );
 		add_image_size( 'post-thumb', 670, 402, true );
-		add_image_size( 'blog-card', 750, 375, true );
+		add_image_size( 'blog-card', 730, 375, true );
 		add_image_size( 'blog-post', 80, 80, true );
 		add_image_size( 'blog-thumb', 68, 68, true );
+		add_image_size( 'top-thumb', 757, 596, true );
 		add_image_size( 'post-nav', 60, 60, true );
 		add_image_size( 'serv-card', 98, 80, true );
 		add_image_size( 'care-thumb', 445, 580, true );
@@ -161,10 +162,10 @@ function anipat_widgets_init() {
 			'name'          => esc_html__( 'Sidebar Category', 'anipat' ),
 			'id'            => 'sidebar-category',
 			'description'   => esc_html__( 'Add widgets here.', 'anipat' ),
-			'before_widget' => '<div class="footer-widget %2$s" id="%1$s">',
+			'before_widget' => '<div class="single_sidebar_widget %2$s" id="%1$s">',
 			'after_widget'  => '</div>',
-			'before_title'  => '<div class="footer-title"><h3>',
-			'after_title'   => '</h3></div>',
+			'before_title'  => '<div class="widget_title"><h4>',
+			'after_title'   => '</h4></div>',
 		)
 	);
 	register_sidebar(
@@ -287,6 +288,18 @@ function add_span_cat_count($text) {
 }
 add_filter('wp_list_categories', 'add_span_cat_count');
 
+function change_class($text) {
+	$str = str_replace('search-submit', 'button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn', $text);
+	$str = str_replace('Поиск', 'Search', $str);
+	$str = str_replace('<span class="screen-reader-text">Найти:</span>', '', $str);
+	$str = str_replace('<label><input type="search" class="form-control" placeholder="Search…" value="" name="s"></label>', '<div class="input-group mb-3"><input type="text" class="form-control" placeholder="Search Keyword"><div class="input-group-append"><button class="btn" type="button"><i class="ti-search"></i></button></div>', $str);
+	$str = str_replace('Search...', 'Search Keyword', $str);
+	$str = str_replace('search-field', 'wpcf7-form-control wpcf7-text form-control', $str);
+
+	return $str;
+}
+add_filter('get_search_form', 'change_class');
+
 function echo_trim_title($title) {
 	if (substr($title, 0, 2) !== "<i") {
 		return wp_trim_words( $title, 5, ' ...' );
@@ -350,7 +363,7 @@ function services_init() {
 			'new_item'           => 'Новый сервис',
 			'view_item'          => 'Посмотреть сервис',
 			'search_items'       => 'Найти сервис',
-			'not_found'          => 'Сервисов не найден',
+			'not_found'          => 'Сервисов не найдено',
 			'not_found_in_trash' => 'В корзине сервисов не найден',
 			'parent_item_colon'  => '',
 			'menu_name'          => 'Сервисы'
@@ -402,22 +415,22 @@ function reviews_init() {
 	) );
 }
 
-add_action('init', 'teams_init');
-function teams_init() {
+add_action('init', 'team_init');
+function team_init() {
 	register_post_type('team', array(
 		'labels'             => array(
-			'name'               => 'Команды',
-			'singular_name'      => 'Teams',
-			'add_new'            => 'Добавить новую',
-			'add_new_item'       => 'Добавить новую команду',
-			'edit_item'          => 'Редактировать команду',
-			'new_item'           => 'Новая команда',
+			'name'               => 'Команда',
+			'singular_name'      => 'Team',
+			'add_new'            => 'Добавить нового',
+			'add_new_item'       => 'Добавить нового члена команды',
+			'edit_item'          => 'Редактировать работника',
+			'new_item'           => 'Новый член команды',
 			'view_item'          => 'Посмотреть команду',
-			'search_items'       => 'Найти команду',
-			'not_found'          => 'Команд не найдено',
-			'not_found_in_trash' => 'В корзине команд не найдено',
+			'search_items'       => 'Найти члена команды',
+			'not_found'          => 'Членов команды не найдено',
+			'not_found_in_trash' => 'В корзине членов команды не найдено',
 			'parent_item_colon'  => '',
-			'menu_name'          => 'Команды'
+			'menu_name'          => 'Команда'
 			),
 		'public'             => true,
 		'publicly_queryable' => true,
@@ -434,61 +447,37 @@ function teams_init() {
 	) );
 }
 
-
-// хук, через который подключается функция
-// регистрирующая новые таксономии (create_video_taxonomies)
-// add_action( 'init', 'create_video_taxonomies' );
-
-// функция, создающая 2 новые таксономии "genres" и "authors" для постов типа "video"
-// function create_video_taxonomies() {
-
-	// Добавляем древовидную таксономию 'genre' (как категории)
-	// register_taxonomy('genre', array('video'), array(
-	// 	'hierarchical'  => true,
-	// 	'labels'        => array(
-	// 		'name'              => _x( 'Жанры', 'taxonomy general name' ),
-	// 		'singular_name'     => _x( 'Genre', 'taxonomy singular name' ),
-	// 		'search_items'      =>  __( 'Search Genres' ),
-	// 		'all_items'         => __( 'All Genres' ),
-	// 		'parent_item'       => __( 'Parent Genre' ),
-	// 		'parent_item_colon' => __( 'Parent Genre:' ),
-	// 		'edit_item'         => __( 'Edit Genre' ),
-	// 		'update_item'       => __( 'Update Genre' ),
-	// 		'add_new_item'      => __( 'Добавить новый жанр' ),
-	// 		'new_item_name'     => __( 'New Genre Name' ),
-	// 		'menu_name'         => __( 'Жанры' ),
-	// 	),
-	// 	'show_ui'       => true,
-	// 	'query_var'     => true,
-	// 	'rewrite'       => array( 'slug' => 'the_genre' ), // есть свой собственный слаг в URL
-	// ));
-
-	// Добавляем НЕ древовидную таксономию 'estimation' (как метки)
-// 	register_taxonomy('estimation', 'review', array(
-// 		'hierarchical'  => false,
-// 		'labels'        => array(
-// 			'name'                        => _x( 'Авторы', 'taxonomy general name' ),
-// 			'singular_name'               => _x( 'Estimation', 'taxonomy singular name' ),
-// 			'search_items'                =>  __( 'Search Authors' ),
-// 			'popular_items'               => __( 'Popular Authors' ),
-// 			'all_items'                   => __( 'All Authors' ),
-// 			'parent_item'                 => null,
-// 			'parent_item_colon'           => null,
-// 			'edit_item'                   => __( 'Edit Author' ),
-// 			'update_item'                 => __( 'Update Author' ),
-// 			'add_new_item'                => __( 'Add New Author' ),
-// 			'new_item_name'               => __( 'New Author Name' ),
-// 			'separate_items_with_commas'  => __( 'Separate authors with commas' ),
-// 			'add_or_remove_items'         => __( 'Add or remove authors' ),
-// 			'choose_from_most_used'       => __( 'Choose from the most used authors' ),
-// 			'menu_name'                   => __( 'Авторы' ),
-// 		),
-// 		'show_ui'       => true,
-// 		'query_var'     => true,
-// 		'rewrite'       => array( 'slug' => 'the_author' ), // свой слаг в URL
-// 	));
-// }
-
+add_action('init', 'adapt_init');
+function adapt_init() {
+	register_post_type('adapt', array(
+		'labels'             => array(
+			'name'               => 'Пристроенные',
+			'singular_name'      => 'Adapt',
+			'add_new'            => 'Добавить пристроенного',
+			'add_new_item'       => 'Добавить нового пристроенного',
+			'edit_item'          => 'Редактировать пристроенного',
+			'new_item'           => 'Новый пристроенный',
+			'view_item'          => 'Посмотреть пристроенных',
+			'search_items'       => 'Найти пристроенного',
+			'not_found'          => 'Пристроенных не найдено',
+			'not_found_in_trash' => 'В корзине пристроенных не найдено',
+			'parent_item_colon'  => '',
+			'menu_name'          => 'Пристроенные'
+			),
+		'public'             => true,
+		'publicly_queryable' => true,
+		'show_ui'            => true,
+		'show_in_menu'       => true,
+		'menu_icon'			 => 'dashicons-buddicons-activity',
+		'query_var'          => true,
+		'rewrite'            => true,
+		'capability_type'    => 'post',
+		'has_archive'        => true,
+		'hierarchical'       => false,
+		'menu_position'      => 25,
+		'supports'           => array('title','editor','author','thumbnail','excerpt','comments')
+	) );
+}
 
 add_action( 'init', 'create_review_taxonomies' );
 function create_review_taxonomies() {

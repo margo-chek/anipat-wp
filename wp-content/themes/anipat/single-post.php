@@ -86,11 +86,6 @@
 
 				<div class="col-lg-4">
 					<div class="blog_right_sidebar">
-						<aside class="single_sidebar_widget search_widget">
-							<form action="#">
-								<?php echo do_shortcode('[contact-form-7 id="146" title="Search"]') ?>
-							</form>
-						</aside>
 
 						<?php get_sidebar('post'); ?>
 
