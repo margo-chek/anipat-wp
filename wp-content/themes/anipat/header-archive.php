@@ -91,7 +91,12 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="bradcam_text text-center">
-						<h3><?php echo get_the_archive_title(); ?></h3>
+						<h3><?php 
+							if( is_date() || is_day() )
+								echo get_the_date('j F');
+							else
+								the_category();
+						?></h3>
 					</div>
 				</div>
 			</div>

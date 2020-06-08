@@ -23,10 +23,10 @@
 define( 'DB_NAME', 'anipat_wp' );
 
 /** Имя пользователя MySQL */
-define( 'DB_USER', 'admin_anipat' );
+define( 'DB_USER', 'root' );
 
 /** Пароль к базе данных MySQL */
-define( 'DB_PASSWORD', 'GNNeSVjEYlRC9Bb9' );
+define( 'DB_PASSWORD', '' );
 
 /** Имя сервера MySQL */
 define( 'DB_HOST', 'localhost' );

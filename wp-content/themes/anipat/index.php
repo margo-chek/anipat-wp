@@ -13,8 +13,7 @@
  */
 
 get_header();
-?>
-	
+?>	
 	<!-- slider_area_start -->
 	<div class="slider_area">
 		<div class="single_slider slider_bg_1 d-flex align-items-center">

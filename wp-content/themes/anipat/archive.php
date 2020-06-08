@@ -25,7 +25,7 @@ get_header('archive');
 										<article class="blog_item">
 											<div class="blog_item_img">
 												<a class="card-img rounded-0" href="<?php the_permalink() ?>"><?php the_post_thumbnail('blog-card') ?></a>
-												<a href="<?php echo get_post_type_archive_link( 'the_date()' ); ?>" class="blog_item_date"> <!--href="archive.html" -->
+												<a href="<?php echo get_day_link(get_post_time('Y'), get_post_time('m'), get_post_time('j')); ?>" class="blog_item_date"> <!--href="archive.html" -->
 													<h3><?php echo get_the_date('j'); ?></h3>
 													<p><?php echo get_the_date('F'); ?></p>
 												</a>

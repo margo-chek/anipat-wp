@@ -20,9 +20,9 @@ get_header('page');
 						<h2 class="contact-title">Get in Touch</h2>
 					</div>
 					<div class="col-lg-8">
-						<form class="form-contact contact_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
+						<!-- <form class="form-contact contact_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate"> -->
                             <?php echo do_shortcode('[contact-form-7 id="135" title="Get in Touch"]') ?>
-						</form>
+						<!-- </form> -->
 					</div>
 					<div class="col-lg-3 offset-lg-1">
 						<div class="media contact-info">

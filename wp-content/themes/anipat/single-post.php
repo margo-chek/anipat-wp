@@ -15,7 +15,7 @@
 						<div class="blog_details">
 							<h2><?php the_title(); ?></h2>
 							<ul class="blog-info-link mt-3 mb-4">
-								<li><a href="<?php echo get_category_link( get_the_category()[0]->cat_ID ); ?>"><i class="fa fa-folder-open"></i> <?php echo get_the_category()[0]->cat_name; ?></a></li>
+								<li><a href="<?php echo get_category_link(get_the_category()[0]->term_id); ?>"><i class="fa fa-folder-open"></i> <?php echo get_the_category()[0]->cat_name; ?></a></li>
 							</ul>
 							<p><?php the_content(); ?></p>
 							<p><?php the_content(); ?></p>

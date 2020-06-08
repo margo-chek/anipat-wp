@@ -36,9 +36,9 @@
 							<!-- card -->
 							<div class="col-lg-4 col-md-6">
 								<div class="single_team">
-									<div class="thumb" href="<?php the_permalink() ?>">
+									<a class="thumb" href="<?php the_permalink() ?>">
 										<?php the_post_thumbnail( 'photo-team-thumb' ); ?>
-									</div>
+									</a>
 									<div class="member_name text-center">
 										<div class="mamber_inner">
 											<h3><?php the_title(); ?></h3>

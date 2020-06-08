@@ -41,7 +41,7 @@
 									</div>
 									<div class="service_content text-center">
 										<h3><?php the_title(); ?></h3>
-										<p><?php the_content(); ?></p>
+										<?php the_content(); ?>
 									</div>
 								</div>
 							</div>
