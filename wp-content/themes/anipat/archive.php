@@ -17,7 +17,41 @@ get_header('archive');
 				<div class="col-lg-8 mb-5 mb-lg-0">
 					<div class="blog_left_sidebar">
 
-						<?php get_template_part( 'inc/array', 'blogs' ); ?>
+						<?php
+
+							if ( have_posts() ) : 
+								while ( have_posts() ) : the_post(); ?>
+
+										<article class="blog_item">
+											<div class="blog_item_img">
+												<a class="card-img rounded-0" href="<?php the_permalink() ?>"><?php the_post_thumbnail('blog-card') ?></a>
+												<a href="<?php echo get_post_type_archive_link( 'the_date()' ); ?>" class="blog_item_date"> <!--href="archive.html" -->
+													<h3><?php echo get_the_date('j'); ?></h3>
+													<p><?php echo get_the_date('F'); ?></p>
+												</a>
+											</div>
+
+											<div class="blog_details">
+												<a class="d-inline-block" href="<?php the_permalink(); ?>">
+													<h2><?php the_title(); ?></h2>
+												</a>
+												<p><?php the_excerpt(); ?></p>
+												<ul class="blog-info-link">
+													<li><a href="<?php echo get_category_link(get_the_category()[0]->term_id); ?>"><i class="fa fa-folder-open"></i> <?php echo get_the_category()[0]->cat_name; ?></a></li>
+												</ul>
+											</div>
+										</article>
+									
+								
+								<?php		
+								endwhile;
+
+							else :
+
+							get_template_part( 'template-parts/content', 'none' );
+
+							endif;
+						?>		
 
 					</div>
 				</div>
@@ -34,6 +68,6 @@ get_header('archive');
 	</section>
 	<!--================Blog Area =================-->
 
-
 <?php
+
 get_footer();

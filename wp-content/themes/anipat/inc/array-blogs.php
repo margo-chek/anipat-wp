@@ -18,12 +18,16 @@
 	if (!empty($myposts)) {
 		
 		foreach( $myposts as $post ) {
-			setup_postdata( $post ); ?>
+			setup_postdata( $post ); 
+			
+			$url  = '/date'. get_the_date('/Y/f/');  // /date/2014/08/
+			$text = get_the_date('j F, Y'); // 12 Нояб. 2014
+			?>
 
 			<article class="blog_item">
 				<div class="blog_item_img">
 					<a class="card-img rounded-0" href="<?php the_permalink() ?>"><?php the_post_thumbnail('blog-card') ?></a>
-					<a href="<?php echo get_post_type_archive_link( 'the_date()' ); ?>" class="blog_item_date"> <!--href="archive.html" -->
+					<a href="<?php echo get_archives_link( $url, $text, '' ); ?>" class="blog_item_date"> <!--href="archive.html" -->
 						<h3><?php echo get_the_date('j'); ?></h3>
 						<p><?php echo get_the_date('F'); ?></p>
 					</a>
